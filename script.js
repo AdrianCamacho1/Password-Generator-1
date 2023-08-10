@@ -12,21 +12,37 @@ var generateBtn = document.querySelector("#generate");
 
 function generatePassword () {
   // I would generatePassword based on prompts
+  var password = "";
+  for(var i = 0; i< characterLength; i++){
+    var randomIndex = Math.floor(Math.random() * choice.length)
+    password = password + choice[randomIndex]
+  }
+  return password;
 }
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var correctPromts = getPrompts();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  if(correctPromts) {
+    var newPassword = generatePassword();
+  
+    passwordText.value = newPassword;
+  } else {
+    passwordText.value = "";
+
+  }
+  
 
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-function getPrompts () {
+function getPrompts (){
+  choice = [];
+
   characterLength = parseInt(prompt("How many Characters do you want")); //NaN
 
   if(isNaN(characterLength) || characterLength < 8 || characterLength > 128) {
